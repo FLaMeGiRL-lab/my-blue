@@ -38,32 +38,7 @@ body {
 ========================================= */
 
 body::before {
-
-    content: "✦   ✧      ⋆   ✦       ✧   ⋆      ✦
-    ⋆      ✧   ✦      ⋆       ✧
-    ✦      ⋆   ✧       ✦      ⋆
-    ✧   ⋆       ✦   ✧       ⋆
-    ⋆      ✦       ✧      ✦";
-
-    white-space: pre-wrap;
-
-    position: fixed;
-
-    inset: 0;
-
-    color: rgba(255,255,255,.75);
-
-    font-size: 15px;
-
-    line-height: 90px;
-
-    letter-spacing: 25px;
-
-    pointer-events: none;
-
-    z-index: 0;
-
-    animation: stars 5s ease-in-out infinite alternate;
+    pointer-events: none !important;
 }
 
 @keyframes stars {
@@ -1118,38 +1093,28 @@ video {
     </h1>
 
 
-    <div
-        class="box-wrapper"
-        onclick="openMail()"
-    >
+<div
+    class="box-wrapper"
+    id="mailBox"
+    role="button"
+    tabindex="0"
+    aria-label="Open your mail"
+>
+    <div class="box-flap"></div>
 
-        <div class="box-flap"></div>
+    <div class="box">
 
+        <div class="box-tape"></div>
 
-        <div class="box">
-
-            <div class="box-tape"></div>
-
-
-            <div class="box-label">
-
-                TO:
-                <span id="recipientName">
-                    LUJAIN✨
-                </span>
-
-                <br>
-
-                FROM:
-                <span id="senderName">
-                    HUDAA
-                </span>
-
-            </div>
-
+        <div class="box-label">
+            TO: <span id="recipientName">NAME</span>
+            <br>
+            FROM: <span id="senderName">AMNAAA</span>
         </div>
 
     </div>
+
+</div>
 
 
     <p class="mail-subtitle">
@@ -1424,31 +1389,37 @@ document.getElementById("senderName").textContent =
 
 function openMail() {
 
-    const opening =
-        document.getElementById("opening");
+    const mailBox = document.getElementById("mailBox");
 
+mailBox.addEventListener("click", openMail);
 
-    opening.style.opacity =
-        "0";
+mailBox.addEventListener("keydown", function(event) {
 
+    if (event.key === "Enter" || event.key === " ") {
+        openMail(event);
+    }
 
-    setTimeout(() => {
+});
 
+function openMail(event) {
 
-        opening.style.display =
-            "none";
+    if (event) {
+        event.preventDefault();
+    }
 
+    const opening = document.getElementById("opening");
+    const contents = document.getElementById("contents");
 
-        const contents =
-            document.getElementById("contents");
+    opening.style.opacity = "0";
 
+    setTimeout(function() {
 
-        contents.style.display =
-            "block";
+        opening.style.display = "none";
+        contents.style.display = "block";
 
+        window.scrollTo(0, 0);
 
     }, 600);
-
 }
 
 
